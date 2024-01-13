@@ -2,12 +2,11 @@ package Main.Pieces;
 
 import java.util.ArrayList;
 import Main.Chess;
-import Main.Chess.Move;
 
 
 /**
-* Pawn piece, extends the Piece superclass
-*/
+ * Pawn piece, extends the Piece superclass
+ */
 public class Pawn extends Piece {
     // Field
     private boolean firstMove = true;
@@ -26,25 +25,28 @@ public class Pawn extends Piece {
         
         // White moves Up, Black moves Down
         int mod = (team == Piece.Team.White) ? 1 : -1;
-        
+        int posX = x + mod;
+        int posY = y;
+
         // Check if the Pawn can move forward
-        if (Chess.positions[x+mod][y] == null) { // Space must be empty to move there
-            moves.add(new Move(x+mod, y, null));
+        if (Chess.getPosition(posX, posY) == null) { // Space must be empty to move there
+            moves.add(new Move(posX, posY, null));
             
             // Check if the Pawn can move two spaces forward
-            if (firstMove && Chess.positions[mod*2+x][y] == null)
-            moves.add(new Move(mod*2+x, y, null));
+            posX = x + mod * 2;
+            if (firstMove && Chess.getPosition(posX, posY) == null)
+            moves.add(new Move(posX, posY, null));
         }
         
         // Check if the Pawn can Take
-        int posX = x + mod;
-        int posY = y + 1;
-        Piece piece = Chess.positions[posX][posY];
+        posX = x + mod;
+        posY = y + 1;
+        Piece piece = Chess.getPosition(posX, posY);
         if (piece != null) // space must be filled, and other team to take
         if (piece.team != this.team) moves.add(new Move(posX, posY, piece));
         
         posY = y - 1;
-        piece = Chess.positions[posX][posY];
+        piece = Chess.getPosition(posX, posY);
         if (piece != null) 
         if (piece.team != this.team) moves.add(new Move(posX, posY, piece));
         
