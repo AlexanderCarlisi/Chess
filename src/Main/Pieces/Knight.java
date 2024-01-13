@@ -2,12 +2,11 @@ package Main.Pieces;
 
 import java.util.ArrayList;
 import Main.Chess;
-import Main.Chess.Move;
 
 
 /**
-* Pawn piece, extends the Piece superclass
-*/
+ * Pawn piece, extends the Piece superclass
+ */
 public class Knight extends Piece {
     
     // Constructor
