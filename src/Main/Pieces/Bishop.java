@@ -6,10 +6,10 @@ import java.util.ArrayList;
 /**
  * Pawn piece, extends the Piece superclass
  */
-public class Knight extends Piece {
+public class Bishop extends Piece {
     
     // Constructor
-    public Knight(Piece.Team team, int x, int y) {
+    public Bishop(Piece.Team team, int x, int y) {
         super(team);
         setPosition(x, y);
     }
@@ -24,6 +24,6 @@ public class Knight extends Piece {
     
     @Override
     public String getName() {
-        return "Knight";
+        return "Bishop";
     }
 }
