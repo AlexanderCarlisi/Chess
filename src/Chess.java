@@ -4,11 +4,13 @@ import java.util.ArrayList;
 public class Chess {
 
     private class Move {
-        int[] newPosition;
-        Piece pieceAtNewPosition;
+        public int x;
+        public int y;
+        public Piece pieceAtNewPosition;
 
         public Move(int[] newPosition, Piece pieceAtNewPosition) {
-            this.newPosition = newPosition;
+            this.x = newPosition[0];
+            this.y = newPosition[1];
             this.pieceAtNewPosition = pieceAtNewPosition;
         }
     }
@@ -33,6 +35,11 @@ public class Chess {
             position = new int[2];
         }
 
+        /**
+         * Sets the position of the piece on the GameBoard
+         * @param x     : Array Chess.positions[x][y]
+         * @param y     : Array Chess.positions[x][y]
+         */
         public void setPosition(int x, int y) {
             int[] previousPosition = position;
             position = new int[] {x, y};
@@ -54,16 +61,7 @@ public class Chess {
 
         private boolean firstMove = true;
 
-        @Override
-        public boolean move(int[] newPosition, Piece pieceAtPosition) {
-            Move moveToMake = new Move(newPosition, pieceAtPosition);
-
-            ArrayList<Move> availableMoves = this.getAvailableMoves();
-            for (Move move : availableMoves) {
-                if (move == moveToMake) return true;
-            }
-            return false;
-        }
+        
 
         @Override
         public ArrayList<Move> getAvailableMoves() {
@@ -95,13 +93,32 @@ public class Chess {
         }
     }
 
-
+    // Field Variables
     private static Piece[][] positions;
-    private static GUI gui;
 
-    public Chess() {
+
+    // Start the Game of Chess
+    public static void start() {
         positions = new Piece[8][8];
-        // setStartingPositions();
+    }
+
+
+    /**
+     * Moves a piece on the board to the desired position
+     * @param piece         : Piece Object, the piece that is moving
+     * @param moveToMake    : Move Object, the move for the piece to make
+     * 
+     * @return Weither or not the piece moved to the location
+     */
+    public boolean move(Piece piece, Move moveToMake) {
+        // Check if the move is possible
+        ArrayList<Move> availableMoves = piece.getAvailableMoves();
+        for (Move move : availableMoves) 
+            if (move == moveToMake) {
+                piece.setPosition(moveToMake.x, moveToMake.y);
+                return true;
+            };
+        return false;
     }
 
 
