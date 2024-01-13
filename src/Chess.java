@@ -8,14 +8,16 @@ public class Chess {
         public int y;
         public Piece pieceAtNewPosition;
 
-        public Move(int[] newPosition, Piece pieceAtNewPosition) {
-            this.x = newPosition[0];
-            this.y = newPosition[1];
+        public Move(int x, int y, Piece pieceAtNewPosition) {
+            this.x = x;
+            this.y = y;
             this.pieceAtNewPosition = pieceAtNewPosition;
         }
     }
 
-    // Pieces
+    /**
+     * Piece superclass, used as a base for all Chess pieces
+     */
     private class Piece {
         public enum Team {
             White("White"),
@@ -28,65 +30,82 @@ public class Chess {
         }
 
         public Team team;
-        public int[] position;
+        public int x;
+        public int y;
 
         public Piece(Team team) {
             this.team = team;
-            position = new int[2];
+            x = 0;
+            y = 0;
         }
 
         /**
-         * Sets the position of the piece on the GameBoard
+         * Sets the position of the piece on the GameBoard.
+         * Sets on the GUI and Chess.positions
+         * 
          * @param x     : Array Chess.positions[x][y]
          * @param y     : Array Chess.positions[x][y]
          */
         public void setPosition(int x, int y) {
-            int[] previousPosition = position;
-            position = new int[] {x, y};
-            GUI.setPosition((this.team == Team.White), this.toString(), x, y);
-            positions[x][y] = this;
-            positions[previousPosition[0]][previousPosition[1]] = null;
+            positions[this.x][this.y] = null; // clear old position
+            // Set new position
+            this.x = x;
+            this.y = y;
+            GUI.setPosition((this.team == Team.White), this.toString(), this.x, this.y);
+            positions[this.x][this.y] = this;
         }
 
-        // Should be Overridden
+        /**
+         * Get the Available moves of the respective Piece underclass
+         * This method should look for checks to make sure no illegal moves are made.
+         * 
+         * Overridden by each Piece's class
+         * @return an ArrayList of Move class, all moves are possible moves to make.
+         * Default Piece.getAvailableMoves always returns null
+         */
         public ArrayList<Move> getAvailableMoves() {return null;}
     }
 
+    /**
+     * Pawn piece, extends the Piece superclass
+     */
     private class Pawn extends Piece {
+        // Field
+        private boolean firstMove = true;
+
+        // Constructor
         public Pawn(Piece.Team team, int x, int y) {
             super(team);
             setPosition(x, y);
         }
 
-        private boolean firstMove = true;
-
-        
-
         @Override
         public ArrayList<Move> getAvailableMoves() {
             ArrayList<Move> moves = new ArrayList<>();
 
-            int x = this.position[0];
-            int y = this.position[1];
-            int mod = (this.team == Piece.Team.White) ? 1 : -1;
+            // White moves Up, Black moves Down
+            int mod = (team == Piece.Team.White) ? 1 : -1;
 
             // Check if the Pawn can move forward
-            if (positions[x+mod][y] == null) {
-                moves.add(new Move(new int[]{x+mod, y}, null));
+            if (positions[x+mod][y] == null) { // Space must be empty to move there
+                moves.add(new Move(x+mod, y, null));
 
                 // Check if the Pawn can move two spaces forward
                 if (firstMove && positions[mod*2+x][y] == null)
-                    moves.add(new Move(new int[]{mod*2+x, y}, null));
+                    moves.add(new Move(mod*2+x, y, null));
             }
 
             // Check if the Pawn can Take
-            Piece piece = positions[x+mod][y+1];
-            if (piece != null) 
-                if (piece.team != this.team) moves.add(new Move(piece.position, piece));
+            int posX = x + mod;
+            int posY = y + 1;
+            Piece piece = positions[posX][posY];
+            if (piece != null) // space must be filled, and other team to take
+                if (piece.team != this.team) moves.add(new Move(posX, posY, piece));
             
-            piece = positions[x+mod][y-1];
+            posY = y - 1;
+            piece = positions[posX][posY];
             if (piece != null) 
-                if (piece.team != this.team) moves.add(new Move(piece.position, piece));
+                if (piece.team != this.team) moves.add(new Move(posX, posY, piece));
             
             return moves;
         }
