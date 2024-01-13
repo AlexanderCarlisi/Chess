@@ -2,35 +2,15 @@ package Main;
 
 import java.util.ArrayList;
 import Main.Pieces.Piece;
+import Main.Pieces.Piece.Move;
 
 /**
  * Chess Class, logic functionality of the Program, should be declared statically
  */
 public class Chess {
 
-    /**
-     * Move class, used to keep track of the availableMoves() of each piece 
-     */
-    public static class Move {
-        // Field
-        public int x;
-        public int y;
-        public Piece pieceAtNewPosition;
-
-
-        // Constructor
-        public Move(int x, int y, Piece pieceAtNewPosition) {
-            this.x = x;
-            this.y = y;
-            this.pieceAtNewPosition = pieceAtNewPosition;
-
-            // if pieceAtNewPosition is not null, then update value readings
-        }
-    }
-
-
     // Field
-    public static Piece[][] positions;
+    private static Piece[][] positions; // Set Private so only the proper methods can be used
 
 
     // Start the Game of Chess
@@ -51,7 +31,7 @@ public class Chess {
      * 
      * @return Weither or not the piece moved to the location
      */
-    public boolean move(Piece piece, Move moveToMake) {
+    public static boolean move(Piece piece, Move moveToMake) {
         // Check if the move is possible
         ArrayList<Move> availableMoves = piece.getAvailableMoves();
         for (Move move : availableMoves) 
@@ -60,6 +40,47 @@ public class Chess {
                 return true;
             };
         return false;
+    }
+
+
+    /**
+     * Obtain the Piece at desired Position, checks bounds
+     * 
+     * @param x     :   Desired X Location
+     * @param y     :   Desired Y Location
+     * @return Piece at positions[x][y] ***returns null if space is empty or if its out of bounds
+     */
+    public static Piece getPosition(int x, int y) {
+        if (!checkBounds(x, y)) return null; 
+        return positions[x][y];
+    }
+
+    /**
+     * Set the Piece at the desired Position, checks bounds
+     * 
+     * @param piece     :   Piece to set
+     * @param x         :   X Position
+     * @param y         :   Y Position
+     * @return wheither or not the placement was successful
+     */
+    public static boolean setPosition(Piece piece, int x, int y) {
+        if (!checkBounds(x, y)) return false;
+        positions[x][y] = piece;
+        return true;
+    }
+
+    /**
+     * positions[x][y] | Bounds checking for Piece[8][8] positions Multilayered Array
+     * 
+     * @param x
+     * @param y
+     * 
+     * @return False if out of Bounds, True if within bounds
+     */
+    public static boolean checkBounds(int x, int y) {
+        if (x < 0 || y < 0) return false;
+        if (x >= positions.length || y >= positions.length) return false;
+        return true;
     }
 
 
