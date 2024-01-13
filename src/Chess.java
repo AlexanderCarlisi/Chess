@@ -15,29 +15,28 @@ public class Chess {
         }
     }
 
+
+
     /**
      * Piece superclass, used as a base for all Chess pieces
      */
     private class Piece {
         public enum Team {
-            White("White"),
-            Black("Black");
-
-            private String value;
-            private Team(String value) {
-                this.value = value;
-            }
+            White(),
+            Black()
         }
 
         public Team team;
         public int x;
         public int y;
 
+
         public Piece(Team team) {
             this.team = team;
             x = 0;
             y = 0;
         }
+
 
         /**
          * Sets the position of the piece on the GameBoard.
@@ -51,9 +50,10 @@ public class Chess {
             // Set new position
             this.x = x;
             this.y = y;
-            GUI.setPosition((this.team == Team.White), this.toString(), this.x, this.y);
+            GUI.setPosition((this.team == Team.White), this.getName(), this.x, this.y);
             positions[this.x][this.y] = this;
         }
+
 
         /**
          * Get the Available moves of the respective Piece underclass
@@ -64,7 +64,16 @@ public class Chess {
          * Default Piece.getAvailableMoves always returns null
          */
         public ArrayList<Move> getAvailableMoves() {return null;}
+        
+
+        /**
+         * Overridden by each respective Piece class
+         * @return the name of the Piece
+         */
+        public String getName() {return "";}
     }
+
+
 
     /**
      * Pawn piece, extends the Piece superclass
@@ -73,11 +82,13 @@ public class Chess {
         // Field
         private boolean firstMove = true;
 
+
         // Constructor
         public Pawn(Piece.Team team, int x, int y) {
             super(team);
             setPosition(x, y);
         }
+
 
         @Override
         public ArrayList<Move> getAvailableMoves() {
@@ -109,7 +120,15 @@ public class Chess {
             
             return moves;
         }
+
+
+        @Override
+        public String getName() {
+            return "Pawn";
+        }
     }
+
+
 
     // Field Variables
     private static Piece[][] positions;
