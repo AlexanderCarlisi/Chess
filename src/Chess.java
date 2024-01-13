@@ -49,7 +49,6 @@ public class Chess {
         }
 
         // Should be Overridden
-        public boolean move(int[] newPosition, Piece pieceAtPosition) {return false;}
         public ArrayList<Move> getAvailableMoves() {return null;}
     }
 
