@@ -50,7 +50,7 @@ public class Pawn extends Piece {
         if (piece != null) 
         if (piece.team != this.team) moves.add(new Move(posX, posY, piece));
         
-        return moves;
+        return Piece.removeIllegalMoves(moves);
     }
     
     
