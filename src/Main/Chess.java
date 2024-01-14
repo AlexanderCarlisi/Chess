@@ -102,33 +102,4 @@ public class Chess {
         new Knight(team, backRank, 6);
         new Rook(team, backRank, 7);
     }
-
-
-    // public static boolean lookForCheck(int[][] positions) {
-
-    // }
-    
-    // private void setStartingPositions() {
-    //     Piece.Type[] order = {
-    //         Piece.Type.Rook, Piece.Type.Knight, 
-    //         Piece.Type.Bishop, Piece.Type.Queen, 
-    //         Piece.Type.King, Piece.Type.Bishop, 
-    //         Piece.Type.Knight, Piece.Type.Rook
-    //     };
-    //     for (int y = 0; y < 8; y++) {
-    //         setPosition(new Piece(Piece.Team.White, order[y]), 0, y);
-    //         setPosition(new Piece(Piece.Team.White, Piece.Type.Pawn), 1, y);
-    //     }
-    //     for (int y = 0; y < 8; y++) {
-    //         setPosition(new Piece(Piece.Team.Black, order[y]), 7, y);
-    //         setPosition(new Piece(Piece.Team.Black, Piece.Type.Pawn), 6, y);
-    //     }
-    // }
-
-    // private void setPosition(Piece piece, int x, int y) {
-    //     gui.setPosition((piece.team == Piece.Team.White), piece.type.value, x, y);
-    //     positions[x][y] = piece;
-    // }
-
-    // private static int[][] getAvailablePositions(Piece piece, int x, int y) {}
 }
