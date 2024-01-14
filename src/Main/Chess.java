@@ -1,8 +1,8 @@
 package Main;
 
 import java.util.ArrayList;
-import Main.Pieces.Piece;
-import Main.Pieces.Piece.Move;
+import Main.Pieces.*;
+import Main.Pieces.Piece.*;
 
 /**
  * Chess Class, logic functionality of the Program, should be declared statically
@@ -16,11 +16,8 @@ public class Chess {
     // Start the Game of Chess
     public static void start() {
         positions = new Piece[8][8];
-
-        // // Set Starting Positions
-        // Piece[] order = {
-
-        // }
+        setStartingPosition(Team.White, 0);
+        setStartingPosition(Team.Black, 7);
     }
 
 
@@ -81,6 +78,29 @@ public class Chess {
         if (x < 0 || y < 0) return false;
         if (x >= positions.length || y >= positions.length) return false;
         return true;
+    }
+
+
+    /**
+     * Set the Positions of the Starting pieces for the given team
+     * @param team  :   White/Black
+     * @param backRank  :   0/7
+     */
+    private static void setStartingPosition(Team team, int backRank) {
+        // Pawns
+        int mod = (team == Team.White) ? 1 : -1; // get pawn rank
+        for (int i = 0; i < 8; i++) 
+            new Pawn(team, backRank+mod, i);
+
+        // High Material
+        new Rook(team, backRank, 0);
+        new Knight(team, backRank, 1);
+        new Bishop(team, backRank, 2);
+        new Queen(team, backRank, 3);
+        new King(team, backRank, 4);
+        new Bishop(team, backRank, 5);
+        new Knight(team, backRank, 6);
+        new Rook(team, backRank, 7);
     }
 
 
