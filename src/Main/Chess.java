@@ -29,6 +29,8 @@ public class Chess {
      * @return Weither or not the piece moved to the location
      */
     public static boolean move(Piece piece, Move moveToMake) {
+        if (piece == null || moveToMake == null) return false;
+        
         // Check if the move is possible
         ArrayList<Move> availableMoves = piece.getAvailableMoves();
         for (Move move : availableMoves) 
@@ -52,6 +54,7 @@ public class Chess {
         return positions[x][y];
     }
 
+
     /**
      * Set the Piece at the desired Position, checks bounds
      * 
@@ -65,6 +68,7 @@ public class Chess {
         positions[x][y] = piece;
         return true;
     }
+    
 
     /**
      * positions[x][y] | Bounds checking for Piece[8][8] positions Multilayered Array
