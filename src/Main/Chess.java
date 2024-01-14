@@ -7,7 +7,7 @@ import Main.Pieces.Piece.*;
 /**
  * Chess Class, logic functionality of the Program, should be declared statically
  */
-public class Chess {
+public abstract class Chess {
 
     // Field
     private static Piece[][] positions; // Set Private so only the proper methods can be used
@@ -30,7 +30,7 @@ public class Chess {
      */
     public static boolean move(Piece piece, Move moveToMake) {
         if (piece == null || moveToMake == null) return false;
-        
+
         // Check if the move is possible
         ArrayList<Move> availableMoves = piece.getAvailableMoves();
         for (Move move : availableMoves) 

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class GUI {
+public abstract class GUI {
     private static final JFrame GUI = new JFrame();
 
     private static final JPanel MAIN_PANEL = new JPanel();

@@ -30,12 +30,12 @@ public class Pawn extends Piece {
 
         // Check if the Pawn can move forward
         if (Chess.getPosition(posX, posY) == null) { // Space must be empty to move there
-            moves.add(new Move(posX, posY, null));
+            moves.add(new Move(posX, posY));
             
             // Check if the Pawn can move two spaces forward
             posX = x + mod * 2;
             if (firstMove && Chess.getPosition(posX, posY) == null)
-            moves.add(new Move(posX, posY, null));
+            moves.add(new Move(posX, posY));
         }
         
         // Check if the Pawn can Take
@@ -43,12 +43,12 @@ public class Pawn extends Piece {
         posY = y + 1;
         Piece piece = Chess.getPosition(posX, posY);
         if (piece != null) // space must be filled, and other team to take
-        if (piece.team != this.team) moves.add(new Move(posX, posY, piece));
+        if (piece.team != this.team) moves.add(new Move(posX, posY));
         
         posY = y - 1;
         piece = Chess.getPosition(posX, posY);
         if (piece != null) 
-        if (piece.team != this.team) moves.add(new Move(posX, posY, piece));
+        if (piece.team != this.team) moves.add(new Move(posX, posY));
         
         return Piece.removeIllegalMoves(moves);
     }
